@@ -1,0 +1,34 @@
+{% extends 'wrapper.html' %}
+
+{% block content %}
+
+  <h2>Advert Form</h2>
+
+  <form method="post" id="advertForm" data-models-url="{% url 'ajax_load_models' %}" novalidate>
+    {% csrf_token %}
+    <table>
+      {{ form.as_table }}
+    </table>
+    <button type="submit">Зберегти</button>
+    <a href="{% url 'advert_changelist' %}">Відмінити</a>
+  </form>
+
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+  <script>
+    $("#id_brand").change(function () {
+      var url = $("#advertForm").attr("data-models-url");
+      var brandId = $(this).val();
+
+      $.ajax({
+        url: url,
+        data: {
+          'brand': brandId
+        },
+        success: function (data) {
+          $("#id_model").html(data);
+        }
+      });
+    });
+  </script>
+
+{% endblock %}

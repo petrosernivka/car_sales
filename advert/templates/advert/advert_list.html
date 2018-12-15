@@ -1,0 +1,39 @@
+{% extends 'wrapper.html' %}
+{% load static %}
+
+{% block title %}Car Sales List{% endblock %}
+
+{% block content %}
+{% csrf_token %}
+  <p>
+    <a href="{% url 'advert_add' %}">Додати оголошення</a>
+  </p>
+
+  <table border="1">
+    <thead>
+      <tr>
+        <th>Id</th>
+        <th>Марка</th>
+        <th>Модель</th>
+        <th>Категорія</th>
+        <th>Ціна</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for advert in adverts %}
+        <tr>
+          <td><a href="{% url 'advert_change' advert.pk %}">{{ advert.pk }}</a></td>
+          <td>{{ advert.brand.name }}</td>
+          <td>{{ advert.model.name }}</td>
+          <td>{{ advert.category }}</td>
+          <td>{{ advert.price }}</td>
+        </tr>
+      {% empty %}
+        <tr>
+          <td colspan="4">Немає оголошень в базі. <a href="{% url 'advert_add' %}">Додати перше оголошення</a>.</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+{% endblock %}

@@ -1,5 +1,9 @@
 from django.contrib import admin
-from advert.models import Advert
+from .models import Advert, CarBrand, CarModel
 
 
-admin.site.register(Advert)
+class AuthorAdmin(admin.ModelAdmin):
+    pass
+admin.site.register(Advert, AuthorAdmin)
+admin.site.register(CarBrand, AuthorAdmin)
+admin.site.register(CarModel, AuthorAdmin)
